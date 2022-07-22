@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useEffect, useState } from "react";
 import Login from "./pages/Login";
 //redux
 import { Omc23Provider } from "./context/omc23/ContextOmc23";
@@ -13,29 +13,48 @@ import { TableProvider } from "./context/Materiales/TableContext";
 import { Container } from "./components/Materiales/Container";
 import { LoginProvider } from "./context/LoginContext";
 import { useLogin } from "./context/LoginContext";
-import { Omc34ConProvider } from "./context/omc34/contextOmcCon34";
+import { Omc34ConProvider } from "./context/omc34/ContextOmcCon34";
+import { Omc41Provider } from "./context/omc41/ContextOmc41";
+import { Omc34Provider } from "./context/omc34/ContextOmc34";
+
+
+
 function App() {
-  
-  const {dataToken,authentication}= useLogin()
+
+  const { dataToken, authentication, setDataToken, setauthentication } = useLogin()
 
 
-  if(authentication===false){
-      return(
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('ccgData')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setDataToken(user)
+      setauthentication(true)
+    }
 
-          <Login/>
-        
-      )
+  }, [])
+
+  if (authentication === false) {
+    return (
+
+      <Login />
+
+    )
   }
 
-  if(authentication===true){
+  if (authentication === true) {
     return (
       <div className="" >
-        
+
         <Provider store={store}>
           <Omc23Provider>
             <TableProvider>
               <Omc34ConProvider>
-              <Rutas />
+                <Omc34Provider>
+                  <Omc41Provider>
+                    <Rutas />
+                  </Omc41Provider>
+                </Omc34Provider>
               </Omc34ConProvider>
             </TableProvider>
           </Omc23Provider>
@@ -44,6 +63,6 @@ function App() {
     )
   }
 
-  }
+}
 
 export default App;

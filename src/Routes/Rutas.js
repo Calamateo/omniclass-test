@@ -11,6 +11,9 @@ import Footer from '../components/footer'
 import Home from '../pages/Home'
 import RolesOrg from '../pages/RolesOrg'
 import PageConsultaOrg from '../pages/PageConsultaOrg'
+import PageOmc34 from '../pages/PageOmc34'
+import PageOmc41 from '../pages/PageOmc41'
+import { TestDeOmc34 } from '../components/Test/TestDeOmc34'
 
 
 function Rutas() {
@@ -20,13 +23,16 @@ function Rutas() {
         <BrowserRouter>
             <Navbar />
             <Routes>
-                <Route path="/" element={<Home/>} />
+                <Route path="/" element={<Home />} />
+                <Route path="/test" element={<TestDeOmc34 />} />
                 <Route path="/userList" element={<Omc23Cruds />} />
                 <Route path="/tablaReact" element={<PageOmc23 />} />
                 <Route path="/omniclass" element={loading ? <Loading /> : <TableContainer />} />
                 <Route path="/listaDeMateriales" element={<ListaDeMateriales />} />
-                <Route path='/rolesOrganizacionales' element={<RolesOrg/>}/>
-                <Route path='/consultaRolesOrganizacionales' element={<PageConsultaOrg/>}/>
+                <Route path='/rolesOrganizacionales' element={<RolesOrg />} />
+                <Route path='/consultaRolesOrganizacionales' element={<PageConsultaOrg />} />
+                <Route path="/omniclass34" element={<PageOmc34 />} />
+                <Route path="/omniclass41" element={<PageOmc41 />} />
             </Routes>
         </BrowserRouter>
     )

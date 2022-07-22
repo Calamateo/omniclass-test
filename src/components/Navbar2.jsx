@@ -10,6 +10,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { AiFillDownCircle } from "react-icons/ai";
 import { SiSuperuser } from "react-icons/si";
 import { useLogin } from "../context/LoginContext";
+import { TableContext } from "../context/Materiales/TableContext";
 
 export default function Navbar() {
   const [estadoUser, setestadoUser] = useState("bx bx-menu");
@@ -60,6 +61,8 @@ export default function Navbar() {
     subList.toggleAttribute("hidden");
   };
 
+  const { fetchMateriales } = React.useContext(TableContext);
+
   return (
     <div id="body-pd">
       <header className="header" id="header">
@@ -100,23 +103,27 @@ export default function Navbar() {
               <span className="nav_logo-name">PERFIL</span>
             </NavLink>
             <div className="nav_list">
-              <NavLink to="/listaDeMateriales" className="nav_link">
+              <NavLink
+                to="/listaDeMateriales"
+                onClick={fetchMateriales}
+                className="nav_link"
+              >
                 <i className="bx bx-grid-alt nav_icon"></i>
                 <span className="nav_name">ELEMENTOS DE CONSTRUCCION</span>
               </NavLink>
-              <NavLink to="/tablaReact" className="nav_link">
+              <NavLink to="/omniclass41" className="nav_link">
                 <GiMaterialsScience className="bx bx-user nav_icon" />
                 <span className="nav_name">MATERIALES</span>
               </NavLink>
-              <NavLink to="/omniclass" className="nav_link">
+              <NavLink to="/tablaReact" className="nav_link">
                 <BiCuboid className="bx bx-bookmark nav_icon" />
                 <span className="nav_name">PRODUCTOS</span>
               </NavLink>
-              <NavLink to="/listaDeMateriales" className="nav_link">
+              <NavLink to="/omniclass" className="nav_link">
                 <i className="bx bx-message-square-detail nav_icon"></i>
                 <span className="nav_name">ACTIVIDADES</span>
               </NavLink>
-              <NavLink to="/rolesOrganizacionales" className="nav_link">
+              <NavLink to="/omniclass34" className="nav_link">
                 <VscOrganization className="bx bx-folder nav_icon" />
                 <span className="nav_name">ROLES ORGANIZACIONALES</span>
               </NavLink>

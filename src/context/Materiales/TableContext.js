@@ -59,7 +59,7 @@ function TableProvider(props) {
 
   //URL base for API requests
   const api = axios.create({
-    baseURL: 'http://127.0.0.1:8000/',
+    baseURL: 'https://msdocs-python-sqlserver-api-215.azurewebsites.net/',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
       'Authorization': `Token ${dataToken.token}`
@@ -125,51 +125,50 @@ function TableProvider(props) {
 
   const fetchMateriales = async () => {
 
-    const { data: materials } = await api(`apiMateriales/ListarMateriales/`)
+    const { data: materials } = await api(`apimateriales/Material/`)
     const numero = materials.count + 1;
     await setMaterial(String(numero).padStart(5, 0));
 
-    const { data: listarEsfuerzo } = await api(`apiMateriales/ListarEsfuerzo/`)
+    const { data: listarEsfuerzo } = await api(`apimateriales/ListarEsfuerzo/`)
     await setListarEsfuerzo(listarEsfuerzo.results);
 
-    const { data: esfuerzo } = await api(`apiMateriales/ListarValorEsfuerzo/`)
+    const { data: esfuerzo } = await api(`apimateriales/ListarValorEsfuerzo/`)
     await setListarValorEsfuerzo(esfuerzo.results);
 
-    const { data: listarUnidad } = await api(`apiUnidadesMedida/UnidadesMedida/`)
+    const { data: listarUnidad } = await api(`apiunidadesmedida/UnidadesMedida/`)
     await setListarUnidadesMedida(listarUnidad.results);
-    console.log(listarUnidad.results);
 
-    const { data: listarTipoResistencia } = await api(`apiMateriales/ListarTipoResistencia/`)
+    const { data: listarTipoResistencia } = await api(`apimateriales/ListarTipoResistencia/`)
     await setListarTipoResistencia(listarTipoResistencia.results);
 
-    const { data: listarAplPrincipales } = await api(`apiMateriales/ListarAplPrincipales/`)
+    const { data: listarAplPrincipales } = await api(`apimateriales/ListarAplPrincipales/`)
     await setListarAplPrincipales(listarAplPrincipales.results);
 
-    const { data: listarTMA } = await api(`apiMateriales/ListarTMA/`)
+    const { data: listarTMA } = await api(`apimateriales/ListarTMA/`)
     await setListarTMA(listarTMA.results);
 
-    const { data: listarRevenimiento } = await api(`apiMateriales/ListarRevenimiento/`)
+    const { data: listarRevenimiento } = await api(`apimateriales/ListarRevenimiento/`)
     await setListarRevenimiento(listarRevenimiento.results);
 
-    const { data: listarDensidad } = await api(`apiMateriales/ListarDensidad/`)
+    const { data: listarDensidad } = await api(`apimateriales/ListarDensidad/`)
     await setListarDensidad(listarDensidad.results);
 
-    const { data: listarSistColocacion } = await api(`apiMateriales/ListarSistColocacion/`)
+    const { data: listarSistColocacion } = await api(`apimateriales/ListarSistColocacion/`)
     await setListarSistColocacion(listarSistColocacion.results);
 
-    const { data: listarClasExposicion } = await api(`apiMateriales/ListarClasExposicion/`)
+    const { data: listarClasExposicion } = await api(`apimateriales/ListarClasExposicion/`)
     await setListarClasExposicion(listarClasExposicion.results);
 
-    const { data: listarFlujoRev } = await api(`apiMateriales/ListarFlujoRev/`)
+    const { data: listarFlujoRev } = await api(`apimateriales/ListarFlujoRev/`)
     await setListarFlujoRev(listarFlujoRev.results);
 
-    const { data: listarIonCloruro } = await api(`apiMateriales/ListarIonCloruro/`)
+    const { data: listarIonCloruro } = await api(`apimateriales/ListarIonCloruro/`)
     await setListarIonCloruro(listarIonCloruro.results);
 
-    const { data: listarFibraConcre } = await api(`apiMateriales/ListarFibraConcre/`)
+    const { data: listarFibraConcre } = await api(`apimateriales/ListarFibraConcre/`)
     await setListarFibraConcre(listarFibraConcre.results);
 
-    const { data: listarConcretosMaterial } = await api(`apiMateriales/ListarConcretosMateriales/`);
+    const { data: listarConcretosMaterial } = await api(`apimateriales/ListarConcretosMateriales/`);
     await setListarConcretosMateriales(listarConcretosMaterial);
     await setListarConcretosMaterialesCopia(listarConcretosMaterial);
 
@@ -211,35 +210,44 @@ function TableProvider(props) {
 
   const apis = async () => {
     console.log(omniClass)
+    var URLDatosOmniClass = ''
+    if (omniClass === 23) {
+      URLDatosOmniClass = 'apiomcproductos/OMC23'
+    } else {
+      URLDatosOmniClass = 'apiomcmateriales/OMC41'
+    }
+    console.log(URLDatosOmniClass)
     //Level 1 data
-    const { data } = await api(`apiOMC${omniClass}/ListarOMC${omniClass}Nivel1/`)
+    const { data } = await api(`${URLDatosOmniClass}Nivel1/`)
     // const users = await data.json();
     await setNivel1(data.results);
     await setDatos(data.results);
 
     //Level 2 data
-    const { data: data2 } = await api(`apiOMC${omniClass}/ListarOMC${omniClass}Nivel2/`)
+    const { data: data2 } = await api(`${URLDatosOmniClass}Nivel2/`)
     // const users2 = await data2.json();
     await setNivel2(data2.results);
 
     //Level 3 data
-    const { data: data3 } = await api(`apiOMC${omniClass}/ListarOMC${omniClass}Nivel3/`)
+    const { data: data3 } = await api(`${URLDatosOmniClass}Nivel3/`)
     // const users3 = await data3.json();
     await setNivel3(data3.results);
 
     //Level 4 data
-    const { data: data4 } = await api(`apiOMC${omniClass}/ListarOMC${omniClass}Nivel4/`)
+    const { data: data4 } = await api(`${URLDatosOmniClass}Nivel4/`)
     // const users4 = await data4.json();
     await setNivel4(data4.results);
 
     //Level 5 data
-    const { data: data5 } = await api(`apiOMC${omniClass}/ListarOMC${omniClass}Nivel5/`)
+    const { data: data5 } = await api(`${URLDatosOmniClass}Nivel5/`)
     // const users5 = await data5.json();
     await setNivel5(data5.results);
     //Level 6 data
-    const { data: data6 } = await api(`apiOMC${omniClass}/ListarOMC${omniClass}Nivel6/`)
+    const { data: data6 } = await api(`${URLDatosOmniClass}Nivel6/`)
     // const users6 = await data6.json();
     await setNivel6(data6.results);
+    await console.log(data6.results)
+    await console.log('Todas las apis de omniclass 23 y 41 listas')
   }
 
 
@@ -373,12 +381,12 @@ function TableProvider(props) {
   }
 
   const getVistaParcial = async (codigo) => {
-    const { data: materials } = await api(`apiMateriales/ListarMateriales/`)
+    const { data: materials } = await api(`apimateriales/Material/`)
     // const materialsData = await materials.json();
     const numero = materials.count + 1;
     await setMaterial(String(numero).padStart(5, 0));
     await setNumMaterial(numero);
-    const { data: concreto } = await api(`apiMateriales/ListarConcreto/`)
+    const { data: concreto } = await api(`apimateriales/ListarConcretosMateriales/`)
     // const concretoData = await concreto.json();
     const numeroConcreto = concreto.count + 1;
     await setConcreto(numeroConcreto);
@@ -456,7 +464,6 @@ function TableProvider(props) {
       7: [38, 37,],
     }
 
-    console.log('first')
     var x = []
     datooo[0].forEach((element) => {
       const aw = listarUnidadesMedida.filter(dat => dat.idUniMed === element)[0].Unidad

@@ -98,8 +98,7 @@ function VistaParcial() {
       palabrasClave,
       comentarios,
     };
-    console.log("hola");
-
+    //primer console
     console.table(datosGenerales);
 
     creatMaterial();
@@ -116,6 +115,13 @@ function VistaParcial() {
   };
 
   const creatMaterial = () => {
+    let dateReferencia = new Date();
+    let date =
+      dateReferencia.getFullYear() +
+      "-" +
+      String(dateReferencia.getMonth() + 1).padStart(2, "0") +
+      "-" +
+      String(dateReferencia.getDate()).padStart(2, "0");
     const datas = {
       numMat: 1,
       codigoOmc: vistaParcial[0].Codigo,
@@ -124,6 +130,10 @@ function VistaParcial() {
       descriLarga: vistaParcial[0].descriSpa,
       Comentarios: comentarios,
       palabrasCve: palabrasClave,
+      desCorEng: "",
+      desLargEng: "",
+      fuenteInf: "Bimsa",
+      fecRegInf: date,
       codigoBimsa: null,
     };
     console.log(datas);
@@ -141,7 +151,10 @@ function VistaParcial() {
       redirect: "follow",
     };
 
-    fetch("http://127.0.0.1:8000/apiMateriales/CrearMaterial/", requestOptions)
+    fetch(
+      "https://msdocs-python-sqlserver-api-215.azurewebsites.net/apimateriales/Material/",
+      requestOptions
+    )
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
@@ -180,7 +193,10 @@ function VistaParcial() {
       redirect: "follow",
     };
 
-    fetch("http://127.0.0.1:8000/apiMateriales/CrearConcreto/", requestOptions)
+    fetch(
+      "https://msdocs-python-sqlserver-api-215.azurewebsites.net/apimateriales/Concreto/",
+      requestOptions
+    )
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error crear concreto", error));
@@ -221,7 +237,10 @@ function VistaParcial() {
       redirect: "follow",
     };
 
-    fetch("http://127.0.0.1:8000/apiMateriales/CrearCaracEspe/", requestOptions)
+    fetch(
+      "https://msdocs-python-sqlserver-api-215.azurewebsites.net/apimateriales/CaracEspe/",
+      requestOptions
+    )
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) =>
