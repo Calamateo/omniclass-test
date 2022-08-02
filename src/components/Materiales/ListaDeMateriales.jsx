@@ -2,12 +2,10 @@ import React from "react";
 import { TableContext } from "../../context/Materiales/TableContext";
 import { RiFileEditFill } from "react-icons/ri";
 import { BiExport } from "react-icons/bi";
-import { AiFillSetting } from "react-icons/ai";
 import { Estructura } from "./Estructura";
 import "./TableApi.css";
 import { ModalMateriales } from "./ModalMateriales";
 import { CSVLink } from "react-csv";
-import { Link } from "react-router-dom";
 import { Clasificacion } from "./Clasificacion";
 import { styled } from "@mui/material/styles";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
@@ -18,15 +16,15 @@ function ListaDeMateriales() {
     listarConcretosMateriales,
     datoBaseTabla,
     resetTabla,
-    listarTMA,
-    listarValorEsfuerzo,
-    listarTipoResistencia,
-    listarDensidad,
-    listarFlujoRev,
-    listarRevenimiento,
-    listarFibraConcre,
-    listarClasExposicion,
-    listarSistColocacion,
+    // listarTMA,
+    // listarValorEsfuerzo,
+    // listarTipoResistencia,
+    // listarDensidad,
+    // listarFlujoRev,
+    // listarRevenimiento,
+    // listarFibraConcre,
+    // listarClasExposicion,
+    // listarSistColocacion,
     listarConcretosMaterialesCopia,
     setListarConcretosMaterialesCopia,
     estructura,
@@ -103,12 +101,12 @@ function ListaDeMateriales() {
   // ];
 
   const [busqueda, setBusqueda] = React.useState("");
-  const [busqueda2, setBusqueda2] = React.useState("");
+  // const [busqueda2, setBusqueda2] = React.useState("");
 
   const hangleChange = (e) => {
     setBusqueda(e.target.value);
-    console.log(e.target.value);
     filtrar(e.target.value);
+    console.log(busqueda);
   };
 
   const filtrar = (datoo) => {
@@ -118,6 +116,7 @@ function ListaDeMateriales() {
     if (datoo.length === 0) {
       return setListarConcretosMaterialesCopia(listarConcretosMateriales);
     } else {
+      // eslint-disable-next-line array-callback-return
       var resultadoBusqueda = resultadoSinNull.filter((elemento) => {
         if (
           elemento.codigoOmc.toLowerCase().includes(datoo.toLowerCase()) ||
@@ -130,25 +129,26 @@ function ListaDeMateriales() {
     }
   };
 
-  const hangleChange2 = (e) => {
-    setBusqueda2(e.target.value);
-    filtradoEspecial(e.target.value);
-    console.log(e.target.value);
-  };
+  // const hangleChange2 = (e) => {
+  //   setBusqueda2(e.target.value);
+  //   filtradoEspecial(e.target.value);
+  //   console.log(busqueda2);
+  // };
 
-  const filtradoEspecial = (terminoDeBusqueda) => {
-    var resultadoBusqueda2 = listarConcretosMateriales.filter((elemento) => {
-      if (
-        elemento.valRev
-          .toLowerCase()
-          .includes(terminoDeBusqueda.toLowerCase()) ||
-        elemento.valTma.toLowerCase().includes(terminoDeBusqueda.toLowerCase())
-      ) {
-        return elemento;
-      }
-    });
-    setListarConcretosMaterialesCopia(resultadoBusqueda2);
-  };
+  // const filtradoEspecial = (terminoDeBusqueda) => {
+  //   // eslint-disable-next-line array-callback-return
+  //   var resultadoBusqueda2 = listarConcretosMateriales.filter((elemento) => {
+  //     if (
+  //       elemento.valRev
+  //         .toLowerCase()
+  //         .includes(terminoDeBusqueda.toLowerCase()) ||
+  //       elemento.valTma.toLowerCase().includes(terminoDeBusqueda.toLowerCase())
+  //     ) {
+  //       return elemento;
+  //     }
+  //   });
+  //   setListarConcretosMaterialesCopia(resultadoBusqueda2);
+  // };
 
   const BootstrapTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -168,58 +168,6 @@ function ListaDeMateriales() {
       <Clasificacion />
       {estructura && <Estructura />}
       <br />
-      {/* <div className="row justify-content-between">
-        <div className="col-12 col-md-2 py-2">
-          <select name="" id="" className="form-select">
-            <option value="">Clase</option>
-          </select>
-        </div>
-        <div className="col-12 col-md-2 py-2">
-          <select
-            name=""
-            id=""
-            onChange={hangleChange2}
-            className="form-select"
-          >
-            <option value="">TMA</option>
-            {listarTMA.map((value, index) => (
-              <option key={index} value={value.valTma}>
-                {value.valTma}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="col-12 col-md-2 py-2">
-          <select name="" id="" className="form-select">
-            <option value="">Valor del Esfuerzo</option>
-            {listarValorEsfuerzo.map((valorEs, index) => (
-              <option key={index} value={valorEs.idValEsf}>
-                {valorEs.Valor}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="col-12 col-md-2 py-2">
-          <select name="" id="" className="form-select">
-            <option value="">Tipo de Esfuerzo</option>
-            {
-              <option value={1}>
-                Resistencia a la compresión del concreto
-              </option>
-            }
-          </select>
-        </div>
-        <div className="col-12 col-md-2 py-2">
-          <select name="" id="" className="form-select">
-            <option value="">Tipo de Resistencia</option>
-            {listarTipoResistencia.map((value, index) => (
-              <option key={index} value={value.idTipoResist}>
-                {value.Tipo}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div> */}
       <br />
       <div className="row">
         <div className="col-6 d-flex" role="search">
@@ -276,122 +224,6 @@ function ListaDeMateriales() {
           </tbody>
         </table>
       </div>
-      <div className="row justify-content-between">
-        <div className="col-12 col-md-2 py-2">
-          <select name="" id="" className="form-select">
-            <option value="">Densidad</option>
-            <option value="">Selecciona...</option>
-            {listarDensidad.map((value, index) => (
-              <option key={index} value={value.idDensidad}>
-                {value.valDensidad}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="col-12 col-md-2 py-2">
-          <select name="" id="" className="form-select">
-            <option value="">Tipo de Densidad</option>
-          </select>
-        </div>
-        <div className="col-12 col-md-2 py-2">
-          <select name="" id="" className="form-select">
-            <option value="">Tipo de consistencia</option>
-          </select>
-        </div>
-        <div className="col-12 col-md-2 py-2">
-          <select name="" id="" className="form-select">
-            <option value="">Flujo de revenimiento</option>
-            {listarFlujoRev.map((value, index) => (
-              <option key={index} value={value.idFlujoRev}>
-                {value.valFluRev}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="col-12 col-md-2 py-2">
-          <select
-            name=""
-            id=""
-            onChange={hangleChange2}
-            className="form-select"
-          >
-            <option value="">Valor de revenimiento</option>
-            {listarRevenimiento.map((value, index) => (
-              <option key={index} value={value.valRev}>
-                {value.valRev}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-      <div className="row justify-content-between">
-        <div className="col-12 col-md-3 py-2">
-          <select name="" id="" className="form-select">
-            <option value="">Fibra</option>
-            {listarFibraConcre.map((value, index) => (
-              <option key={index} value={value.idFibraCon}>
-                {value.Fibras}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="col-12 col-md-3 py-2">
-          <select name="" id="" className="form-select">
-            <option value="">Relación agua cemento</option>
-          </select>
-        </div>
-        <div className="col-12 col-md-3 py-2">
-          <select name="" id="" className="form-select">
-            <option value="">Categoria de exposición</option>
-            {listarClasExposicion.map((value, index) => (
-              <option key={index} value={value.idClasExpo}>
-                {value.Condicion}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="col-12 col-md-3 py-2">
-          <select name="" id="" className="form-select">
-            <option value="">Sistema de colocación</option>
-            {listarSistColocacion.map((value, index) => (
-              <option key={index} value={value.idSistColoc}>
-                {value.tipoSistema}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {/* <table className="table" id="tableMaterials">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Código</th>
-            <th scope="col">Descripción en Español</th>
-            <th scope="col">Descripción en Ingles</th>
-            <th className="text-center" scope="col">
-              Acción
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {datos.map((item, index) => (
-            <tr
-              key={index}
-              className="seleccion"
-              id={item[`${datoBaseTabla[index]}`]}
-            >
-              {parametros.map((parametro, index) => (
-                <td key={parametro} className="col">
-                  {item[`${parametro}`]}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
-
-      {/* <Test /> */}
     </div>
   );
 }

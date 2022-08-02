@@ -1,6 +1,6 @@
 import React from "react";
 import { TableContext } from "../../context/Materiales/TableContext";
-import { VistaParcial } from "./VistaParcial";
+// import VistaParcial from "./VistaParcial";
 import "./TableApi.css";
 import { Link } from "react-router-dom";
 
@@ -12,13 +12,13 @@ function TableApi41() {
     datos,
     getNiveles,
     setDescripcion,
-    formularioActivate,
+    // formularioActivate,
     getVistaParcial,
   } = React.useContext(TableContext);
 
   return (
     <React.Fragment>
-      <section className="container mb-3 ">
+      <section className="mb-3 ">
         <div className="table-responsive-md">
           <table className="table" id="tableMaterials">
             <thead>
@@ -51,14 +51,15 @@ function TableApi41() {
                   <td className="col-4">{item.descriEng}</td>
                   {item.regFinal ? (
                     <td className="text-center">
-                      <button
+                      <Link
                         style={{ width: "100px" }}
                         type="button"
                         className="btn btn-info btn-sm"
                         onClick={() => getVistaParcial(item.Codigo)}
+                        to="/formulario"
                       >
                         Seleccionar
-                      </button>
+                      </Link>
                     </td>
                   ) : (
                     <td className="text-center">
@@ -105,7 +106,7 @@ function TableApi41() {
         {/* <h2>Nivel {niveles-1} <h3>{descripcion}</h3></h2> */}
       </section>
 
-      {formularioActivate ? <VistaParcial /> : ""}
+      {/* {formularioActivate ? <VistaParcial /> : ""} */}
     </React.Fragment>
   );
 }

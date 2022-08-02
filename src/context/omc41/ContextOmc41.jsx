@@ -1,23 +1,25 @@
-import { render, renderHook } from "@testing-library/react";
 import axios from "axios";
 import React, { useEffect, useState, useMemo } from "react";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { useLogin } from "../LoginContext";
 // import { fetchAllUsers,fetchAllOMCN2,fetchAllOMCN3,fetchAllOMCN4,fetchAllOMCN5,fetchAllOMCN6} from '../../redux/slices'
 const Omc41Context = React.createContext();
 
 export function Omc41Provider(props) {
-  
-  const {dataToken} = useLogin()
+  // const URLBASE = "http://127.0.0.1:8080/"
+  const URLBASE = "https://msdocs-python-sqlserver-api-215.azurewebsites.net/";
+  const { dataToken } = useLogin();
 
   useEffect(() => {
     fetchData(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
-  const headers = { headers:{
-    'Authorization': `Token ${dataToken.token}`
-  }}
+  const headers = {
+    headers: {
+      Authorization: `Token ${dataToken.token}`,
+    },
+  };
 
   //Listado de Tablas
   const [dataomcn2, setdataomcn2] = useState([]);
@@ -25,7 +27,6 @@ export function Omc41Provider(props) {
   const [dataomcn4, setdataomcn4] = useState([]);
   const [dataomcn5, setdataomcn5] = useState([]);
   const [dataomcn6, setdataomcn6] = useState([]);
-
 
   const [selectcodigo1, setselectcodigo1] = useState();
   const [selectcodigo2, setselectcodigo2] = useState();
@@ -44,28 +45,34 @@ export function Omc41Provider(props) {
 
   //Funciones para filtrar
   //FUNCIONES PARA FILTRAR
-  const selectOpp =(data, dataApi) => {
+  const selectOpp = (data, dataApi) => {
     setselectcodigo1(data);
     const selectid = omc41n1.filter((dato) => dato.Codigo === data);
-    if(dataApi!=null){setdataomcn2(dataApi.filter((dato) => dato.fk_Omc41N1 === selectid[0].idOmc41N1))}else{
-      setdataomcn2(omc41n2.filter((dato) => dato.fk_Omc41N1 === selectid[0].idOmc41N1))
+    if (dataApi != null) {
+      setdataomcn2(
+        dataApi.filter((dato) => dato.fk_Omc41N1 === selectid[0].idOmc41N1)
+      );
+    } else {
+      setdataomcn2(
+        omc41n2.filter((dato) => dato.fk_Omc41N1 === selectid[0].idOmc41N1)
+      );
     }
     setdataomcn3([]);
     setdataomcn4([]);
     setdataomcn5([]);
   };
 
-  const selectOpp2 = (data,dataApi) => {
-
+  const selectOpp2 = (data, dataApi) => {
     setselectcodigo2(data);
     const selectid = omc41n2.filter((dato) => dato.Codigo === data);
-    if(dataApi!=null){
+    if (dataApi != null) {
       setdataomcn3(
-        dataApi.filter((dato) => dato.fk_Omc41N2 === selectid[0].idOmc41N2));
-    }else{
+        dataApi.filter((dato) => dato.fk_Omc41N2 === selectid[0].idOmc41N2)
+      );
+    } else {
       setdataomcn3(
         omc41n3.filter((dato) => dato.fk_Omc41N2 === selectid[0].idOmc41N2)
-      )
+      );
     }
 
     setdataomcn4([]);
@@ -73,113 +80,120 @@ export function Omc41Provider(props) {
     setdataomcn6([]);
   };
 
-  const selectOpp3 = (data,dataApi) => {
+  const selectOpp3 = (data, dataApi) => {
     setselectcodigo3(data);
     const selectid = omc41n3.filter((dato) => dato.Codigo === data);
-    if(dataApi!=null){
+    if (dataApi != null) {
       setdataomcn4(
         dataApi.filter((dato) => dato.fk_Omc41N3 === selectid[0].idOmc41N3)
-      )
-    }else{
+      );
+    } else {
       setdataomcn4(
         omc41n4.filter((dato) => dato.fk_Omc41N3 === selectid[0].idOmc41N3)
-      )
+      );
     }
     setdataomcn5([]);
     setdataomcn6([]);
   };
 
-  const selectOpp4 = (data,dataApi) => {
+  const selectOpp4 = (data, dataApi) => {
     setselectcodigo4(data);
     const selectid = omc41n4.filter((dato) => dato.Codigo === data);
-    if(dataApi!=null){
+    if (dataApi != null) {
       setdataomcn5(
         dataApi.filter((dato) => dato.fk_Omc41N4 === selectid[0].idOmc41N4)
-      )
-    }else{
+      );
+    } else {
       setdataomcn5(
         omc41n5.filter((dato) => dato.fk_Omc41N4 === selectid[0].idOmc41N4)
-      )
+      );
     }
     setdataomcn6([]);
   };
 
-  const selectOpp5 = (data,dataApi) => {
+  const selectOpp5 = (data, dataApi) => {
     setselectcodigo5(data);
     const selectid = omc41n5.filter((dato) => dato.Codigo === data);
-    if(dataApi!=null){
+    if (dataApi != null) {
       setdataomcn6(
         dataApi.filter((dato) => dato.fk_Omc41N5 === selectid[0].idOmc41N5)
-      )
-    }else{
+      );
+    } else {
       setdataomcn6(
         omc41n6.filter((dato) => dato.fk_Omc41N5 === selectid[0].idOmc41N5)
-      )
+      );
     }
   };
 
   //LLAMADO A LAS APIS
   const fetchData = async (num) => {
     axios
-      .get("http://127.0.0.1:8000/apiOMC41/ListarOMC41Nivel1/",headers)
+      .get(`${URLBASE}apiomcmateriales/OMC41Nivel1/`, headers)
       .then((response) => {
         setomc41n1(response.data.results);
-      }).catch((error)=>{
-        console.error(error)
+      })
+      .catch((error) => {
+        console.error(error);
       });
 
     axios
-      .get("http://127.0.0.1:8000/apiOMC41/ListarOMC41Nivel2/",headers)
+      .get(`${URLBASE}apiomcmateriales/OMC41Nivel2/`, headers)
       .then((response) => {
         setomc41n2(response.data.results);
-        if(num===2){selectOpp(selectcodigo1,response.data.results)}
-        
-      }).catch((error)=>{
-        console.log(error)
-      });
-
-    axios
-      .get("http://127.0.0.1:8000/apiOMC41/ListarOMC41Nivel3/",headers)
-      .then((response) => {
-        setomc41n3(response.data.results);  
-        if(num===3){selectOpp2(selectcodigo2,response.data.results)
-          
+        if (num === 2) {
+          selectOpp(selectcodigo1, response.data.results);
         }
-      }).catch((error)=>{
-        console.log(error)
+      })
+      .catch((error) => {
+        console.log(error);
       });
 
     axios
-      .get("http://127.0.0.1:8000/apiOMC41/ListarOMC41Nivel4/",headers)
+      .get(`${URLBASE}apiomcmateriales/OMC41Nivel3/`, headers)
       .then((response) => {
-        setomc41n4(response.data.results); 
-        if(num===4){selectOpp3(selectcodigo3,response.data.results)
-          
+        setomc41n3(response.data.results);
+        if (num === 3) {
+          selectOpp2(selectcodigo2, response.data.results);
         }
-      }).catch((error)=>{
-        console.log(error)
+      })
+      .catch((error) => {
+        console.log(error);
       });
 
     axios
-      .get("http://127.0.0.1:8000/apiOMC41/ListarOMC41Nivel5/",headers)
+      .get(`${URLBASE}apiomcmateriales/OMC41Nivel4/`, headers)
+      .then((response) => {
+        setomc41n4(response.data.results);
+        if (num === 4) {
+          selectOpp3(selectcodigo3, response.data.results);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    axios
+      .get(`${URLBASE}apiomcmateriales/OMC41Nivel5/`, headers)
       .then((response) => {
         setomc41n5(response.data.results);
-        if(num===5){selectOpp4(selectcodigo4,response.data.results)
-          
+        if (num === 5) {
+          selectOpp4(selectcodigo4, response.data.results);
         }
-      }).catch((error)=>{
-        console.log(error)
+      })
+      .catch((error) => {
+        console.log(error);
       });
 
     axios
-      .get("http://127.0.0.1:8000/apiOMC41/ListarOMC41Nivel6/",headers)
+      .get(`${URLBASE}apiomcmateriales/OMC41Nivel6/`, headers)
       .then((response) => {
-        setomc41n6(response.data.results);  
-        if(num===6){selectOpp5(selectcodigo5,response.data.results)
-        
+        setomc41n6(response.data.results);
+        if (num === 6) {
+          selectOpp5(selectcodigo5, response.data.results);
         }
-      }).catch((error)=>{
-        console.log(error)
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -188,14 +202,18 @@ export function Omc41Provider(props) {
     switch (idtabla) {
       case 1:
         axios
-          .post(`http://localhost:8000/apiOMC41/CrearOMC41Nivel${idtabla}/`, {
-            Codigo: Data.Codigo,
-            definicionEng: Data.definicionEng,
-            definicionSpa: Data.definicionSpa,
-            descriEng: Data.descriEng,
-            descriSpa: Data.descriSpa,
-            anioReg: Data.anioReg,
-          },headers)
+          .post(
+            `http://localhost:8000/apiomcmateriales/CrearOMC41Nivel${idtabla}/`,
+            {
+              Codigo: Data.Codigo,
+              definicionEng: Data.definicionEng,
+              definicionSpa: Data.definicionSpa,
+              descriEng: Data.descriEng,
+              descriSpa: Data.descriSpa,
+              anioReg: Data.anioReg,
+            },
+            headers
+          )
           .then((response) => {
             console.log(response);
             fetchData();
@@ -206,123 +224,149 @@ export function Omc41Provider(props) {
               );
             }
             setresponse(response.request.status);
-          }).catch((error)=>{
-            console.log(error)
+          })
+          .catch((error) => {
+            console.log(error);
           });
         break;
       case 2:
         const register1 = omc41n1.filter((select) => select.Codigo === Codigo);
         axios
-          .post(`http://localhost:8000/apiOMC41/CrearOMC41Nivel${idtabla}/`, {
-            Codigo: Data.Codigo,
-            anioReg: Data.anioReg,
-            definicionEng: Data.definicionEng,
-            definicionSpa: Data.definicionSpa,
-            descriEng: Data.descriEng,
-            descriSpa: Data.descriSpa,
-            fk_Omc41N1: register1[0].idOmc41N1,
-          },headers)
+          .post(
+            `http://localhost:8000/apiomcmateriales/CrearOMC41Nivel${idtabla}/`,
+            {
+              Codigo: Data.Codigo,
+              anioReg: Data.anioReg,
+              definicionEng: Data.definicionEng,
+              definicionSpa: Data.definicionSpa,
+              descriEng: Data.descriEng,
+              descriSpa: Data.descriSpa,
+              fk_Omc41N1: register1[0].idOmc41N1,
+            },
+            headers
+          )
           .then((response) => {
             fetchData(2);
             if (response.request.status === 201) {
               return toast.success("EL registro se ha creado exitosamente");
             }
             setresponse(response.request.status);
-          }).catch((error)=>{
-            console.log(error)
+          })
+          .catch((error) => {
+            console.log(error);
           });
 
         break;
       case 3:
         const register2 = omc41n2.filter((select) => select.Codigo === Codigo);
         axios
-          .post(`http://localhost:8000/apiOMC41/CrearOMC41Nivel${idtabla}/`, {
-            Codigo: Data.Codigo,
-            anioReg: Data.anioReg,
-            definicionEng: Data.definicionEng,
-            definicionSpa: Data.definicionSpa,
-            descriEng: Data.descriEng,
-            descriSpa: Data.descriSpa,
-            regFinal: Data.regFinal,
-            fk_Omc41N2: register2[0].idOmc41N2,
-          },headers)
+          .post(
+            `http://localhost:8000/apiomcmateriales/CrearOMC41Nivel${idtabla}/`,
+            {
+              Codigo: Data.Codigo,
+              anioReg: Data.anioReg,
+              definicionEng: Data.definicionEng,
+              definicionSpa: Data.definicionSpa,
+              descriEng: Data.descriEng,
+              descriSpa: Data.descriSpa,
+              regFinal: Data.regFinal,
+              fk_Omc41N2: register2[0].idOmc41N2,
+            },
+            headers
+          )
           .then((response) => {
             fetchData(3);
             if (response.request.status === 201) {
               return toast.success("EL registro se ha creado exitosamente");
             }
             setresponse(response.request.status);
-          }).catch((error)=>{
-            console.log(error)
+          })
+          .catch((error) => {
+            console.log(error);
           });
         break;
       case 4:
         const register3 = omc41n3.filter((select) => select.Codigo === Codigo);
         axios
-          .post(`http://localhost:8000/apiOMC41/CrearOMC41Nivel${idtabla}/`, {
-            Codigo: Data.Codigo,
-            anioReg: Data.anioReg,
-            definicionEng: Data.definicionEng,
-            definicionSpa: Data.definicionSpa,
-            descriEng: Data.descriEng,
-            descriSpa: Data.descriSpa,
-            regFinal: Data.regFinal,
-            fk_Omc41N3: register3[0].idOmc41N3,
-          },headers)
+          .post(
+            `http://localhost:8000/apiomcmateriales/CrearOMC41Nivel${idtabla}/`,
+            {
+              Codigo: Data.Codigo,
+              anioReg: Data.anioReg,
+              definicionEng: Data.definicionEng,
+              definicionSpa: Data.definicionSpa,
+              descriEng: Data.descriEng,
+              descriSpa: Data.descriSpa,
+              regFinal: Data.regFinal,
+              fk_Omc41N3: register3[0].idOmc41N3,
+            },
+            headers
+          )
           .then((response) => {
             fetchData(4);
             if (response.request.status === 201) {
               return toast.success("EL registro se ha creado exitosamente");
             }
             setresponse(response.request.status);
-          }).catch((error)=>{
-            console.log(error)
+          })
+          .catch((error) => {
+            console.log(error);
           });
         break;
       case 5:
         const register4 = omc41n4.filter((select) => select.Codigo === Codigo);
         axios
-          .post(`http://localhost:8000/apiOMC41/CrearOMC41Nivel${idtabla}/`, {
-            Codigo: Data.Codigo,
-            anioReg: Data.anioReg,
-            definicionEng: Data.definicionEng,
-            definicionSpa: Data.definicionSpa,
-            descriEng: Data.descriEng,
-            descriSpa: Data.descriSpa,
-            regFinal: Data.regFinal,
-            fk_Omc41N4: register4[0].idOmc41N4,
-          },headers)
+          .post(
+            `http://localhost:8000/apiomcmateriales/CrearOMC41Nivel${idtabla}/`,
+            {
+              Codigo: Data.Codigo,
+              anioReg: Data.anioReg,
+              definicionEng: Data.definicionEng,
+              definicionSpa: Data.definicionSpa,
+              descriEng: Data.descriEng,
+              descriSpa: Data.descriSpa,
+              regFinal: Data.regFinal,
+              fk_Omc41N4: register4[0].idOmc41N4,
+            },
+            headers
+          )
           .then((response) => {
             fetchData(5);
             if (response.request.status === 201) {
               return toast.success("EL registro se ha creado exitosamente");
             }
             setresponse(response.request.status);
-          }).catch((error)=>{
-            console.log(error)
+          })
+          .catch((error) => {
+            console.log(error);
           });
         break;
       case 6:
         const register5 = omc41n5.filter((select) => select.Codigo === Codigo);
         axios
-          .post(`http://localhost:8000/apiOMC41/CrearOMC41Nivel${idtabla}/`, {
-            Codigo: Data.Codigo,
-            anioReg: Data.anioReg,
-            definicionEng: Data.definicionEng,
-            definicionSpa: Data.definicionSpa,
-            descriEng: Data.descriEng,
-            descriSpa: Data.descriSpa,
-            regFinal: Data.regFinal,
-            fk_Omc41N5: register5[0].idOmc41N5,
-          },headers)
+          .post(
+            `http://localhost:8000/apiomcmateriales/CrearOMC41Nivel${idtabla}/`,
+            {
+              Codigo: Data.Codigo,
+              anioReg: Data.anioReg,
+              definicionEng: Data.definicionEng,
+              definicionSpa: Data.definicionSpa,
+              descriEng: Data.descriEng,
+              descriSpa: Data.descriSpa,
+              regFinal: Data.regFinal,
+              fk_Omc41N5: register5[0].idOmc41N5,
+            },
+            headers
+          )
           .then((response) => {
             fetchData(6);
             if (response.request.status === 201) {
               return toast.success("EL registro se ha creado exitosamente");
             }
             setresponse(response.request.status);
-          }).catch((error)=>{
-            console.log(error)
+          })
+          .catch((error) => {
+            console.log(error);
           });
         break;
       default:
@@ -335,14 +379,18 @@ export function Omc41Provider(props) {
     switch (idtabla) {
       case 1:
         axios
-          .put(`http://localhost:8000/apiOMC41/EditarOMC41Nivel1/${id}/`, {
-            Codigo: Data.Codigo,
-            definicionEng: Data.definicionEng,
-            definicionSpa: Data.definicionSpa,
-            descriEng: Data.descriEng,
-            descriSpa: Data.descriSpa,
-            anioReg: Data.anioReg,
-          },headers)
+          .put(
+            `http://localhost:8000/apiomcmateriales/EditarOMC41Nivel1/${id}/`,
+            {
+              Codigo: Data.Codigo,
+              definicionEng: Data.definicionEng,
+              definicionSpa: Data.definicionSpa,
+              descriEng: Data.descriEng,
+              descriSpa: Data.descriSpa,
+              anioReg: Data.anioReg,
+            },
+            headers
+          )
           .then((response) => {
             console.log(response);
             fetchData(1);
@@ -354,108 +402,126 @@ export function Omc41Provider(props) {
         break;
       case 2:
         axios
-          .put(`http://localhost:8000/apiOMC41/EditarOMC41Nivel2/${id}/`, {
-            Codigo: Data.Codigo,
-            anioReg: Data.anioReg,
-            definicionEng: Data.definicionEng,
-            definicionSpa: Data.definicionSpa,
-            descriEng: Data.descriEng,
-            descriSpa: Data.descriSpa,
-            fk_Omc41N1: fk,
-          },headers)
+          .put(
+            `http://localhost:8000/apiomcmateriales/EditarOMC41Nivel2/${id}/`,
+            {
+              Codigo: Data.Codigo,
+              anioReg: Data.anioReg,
+              definicionEng: Data.definicionEng,
+              definicionSpa: Data.definicionSpa,
+              descriEng: Data.descriEng,
+              descriSpa: Data.descriSpa,
+              fk_Omc41N1: fk,
+            },
+            headers
+          )
           .then((response) => {
-            
             if (response.request.status === 200) {
               return (
-                toast.success("El registro se ha actualizado"),
-                fetchData(2)
-              );              
-            }            
+                toast.success("El registro se ha actualizado"), fetchData(2)
+              );
+            }
             setresponse(response.request.status);
-          })
+          });
         break;
       case 3:
         axios
-          .put(`http://localhost:8000/apiOMC41/EditarOMC41Nivel3/${id}/`, {
-            Codigo: Data.Codigo,
-            anioReg: Data.anioReg,
-            definicionEng: Data.definicionEng,
-            definicionSpa: Data.definicionSpa,
-            descriEng: Data.descriEng,
-            descriSpa: Data.descriSpa,
-            regFinal: Data.regFinal,
-            fk_Omc41N2: fk,
-          },headers)
+          .put(
+            `http://localhost:8000/apiomcmateriales/EditarOMC41Nivel3/${id}/`,
+            {
+              Codigo: Data.Codigo,
+              anioReg: Data.anioReg,
+              definicionEng: Data.definicionEng,
+              definicionSpa: Data.definicionSpa,
+              descriEng: Data.descriEng,
+              descriSpa: Data.descriSpa,
+              regFinal: Data.regFinal,
+              fk_Omc41N2: fk,
+            },
+            headers
+          )
           .then((response) => {
-            
             if (response.request.status === 200) {
-              return toast.success("El registro se ha actualizado"),
-              fetchData(3)
+              return (
+                toast.success("El registro se ha actualizado"), fetchData(3)
+              );
             }
             setresponse(response.request.status);
           });
         break;
       case 4:
         axios
-          .put(`http://localhost:8000/apiOMC41/EditarOMC41Nivel4/${id}/`, {
-            Codigo: Data.Codigo,
-            anioReg: Data.anioReg,
-            definicionEng: Data.definicionEng,
-            definicionSpa: Data.definicionSpa,
-            descriEng: Data.descriEng,
-            descriSpa: Data.descriSpa,
-            regFinal: Data.regFinal,
-            fk_Omc41N3: fk,
-          },headers)
+          .put(
+            `http://localhost:8000/apiomcmateriales/EditarOMC41Nivel4/${id}/`,
+            {
+              Codigo: Data.Codigo,
+              anioReg: Data.anioReg,
+              definicionEng: Data.definicionEng,
+              definicionSpa: Data.definicionSpa,
+              descriEng: Data.descriEng,
+              descriSpa: Data.descriSpa,
+              regFinal: Data.regFinal,
+              fk_Omc41N3: fk,
+            },
+            headers
+          )
           .then((response) => {
-            
             if (response.request.status === 200) {
-              return toast.success("El registro se ha actualizado"),
-              fetchData(4)
+              return (
+                toast.success("El registro se ha actualizado"), fetchData(4)
+              );
             }
             setresponse(response.request.status);
           });
         break;
       case 5:
         axios
-          .put(`http://localhost:8000/apiOMC41/EditarOMC41Nivel5/${id}/`, {
-            Codigo: Data.Codigo,
-            anioReg: Data.anioReg,
-            definicionEng: Data.definicionEng,
-            definicionSpa: Data.definicionSpa,
-            descriEng: Data.descriEng,
-            descriSpa: Data.descriSpa,
-            regFinal: Data.regFinal,
-            fk_Omc41N4: fk,
-          },headers)
+          .put(
+            `http://localhost:8000/apiomcmateriales/EditarOMC41Nivel5/${id}/`,
+            {
+              Codigo: Data.Codigo,
+              anioReg: Data.anioReg,
+              definicionEng: Data.definicionEng,
+              definicionSpa: Data.definicionSpa,
+              descriEng: Data.descriEng,
+              descriSpa: Data.descriSpa,
+              regFinal: Data.regFinal,
+              fk_Omc41N4: fk,
+            },
+            headers
+          )
           .then((response) => {
-            
             if (response.request.status === 200) {
-              return toast.success("El registro se ha actualizado"),
-              fetchData(5)
+              return (
+                toast.success("El registro se ha actualizado"), fetchData(5)
+              );
             }
-  
+
             setresponse(response.request.status);
           });
 
         break;
       case 6:
         axios
-          .put(`http://localhost:8000/apiOMC41/EditarOMC41Nivel6/${id}/`, {
-            Codigo: Data.Codigo,
-            anioReg: Data.anioReg,
-            definicionEng: Data.definicionEng,
-            definicionSpa: Data.definicionSpa,
-            descriEng: Data.descriEng,
-            descriSpa: Data.descriSpa,
-            regFinal: Data.regFinal,
-            fk_Omc41N5: fk,
-          },headers)
+          .put(
+            `http://localhost:8000/apiomcmateriales/EditarOMC41Nivel6/${id}/`,
+            {
+              Codigo: Data.Codigo,
+              anioReg: Data.anioReg,
+              definicionEng: Data.definicionEng,
+              definicionSpa: Data.definicionSpa,
+              descriEng: Data.descriEng,
+              descriSpa: Data.descriSpa,
+              regFinal: Data.regFinal,
+              fk_Omc41N5: fk,
+            },
+            headers
+          )
           .then((response) => {
-            
             if (response.request.status === 200) {
-              return toast.success("El registro se ha actualizado"),
-              fetchData(6)
+              return (
+                toast.success("El registro se ha actualizado"), fetchData(6)
+              );
             }
             setresponse(response.request.status);
           });
@@ -487,6 +553,7 @@ export function Omc41Provider(props) {
       selectOpp4,
       selectOpp5,
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     omc41n1,
     omc41n2,

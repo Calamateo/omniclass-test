@@ -15,7 +15,7 @@ function Modal2Add(props) {
     register,
     formState: { errors },
     handleSubmit,
-    setValue,
+    // setValue,
     reset,
   } = useForm();
   const { CreateOmc34Url } = useOmc34();
@@ -40,6 +40,7 @@ function Modal2Add(props) {
 
   //columnas de la tabla
   const columns = useMemo(
+    // eslint-disable-next-line no-sparse-arrays
     () => [
       {
         Header: "No",
@@ -102,7 +103,6 @@ function Modal2Add(props) {
     state: { pageIndex },
     state,
     setGlobalFilter,
-    setPageSize,
   } = useTable({ columns, data }, useGlobalFilter, useSortBy, usePagination);
 
   const { globalFilter } = state;
@@ -124,7 +124,10 @@ function Modal2Add(props) {
         <div className="modalContainer">
           <button
             className="closeBtn"
-            onClick={() => (props.setactive(false), props.setselect(null))}
+            onClick={() => {
+              props.setactive(false);
+              props.setselect(null);
+            }}
           >
             X
           </button>
@@ -185,9 +188,10 @@ function Modal2Add(props) {
                         className="omc34Modal"
                         style={{ fontSize: "12px", fontFamily: "arial" }}
                         {...row.getRowProps()}
-                        onClick={(e) => (
-                          selectRow(e), props.selectFk(row.original.Codigo)
-                        )}
+                        onClick={(e) => {
+                          selectRow(e);
+                          props.selectFk(row.original.Codigo);
+                        }}
                       >
                         {row.cells.map((cell) => {
                           return (

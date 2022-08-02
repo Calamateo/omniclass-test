@@ -1,8 +1,8 @@
-import axios from "axios";
-import React, { useEffect, useState, useMemo, useRef } from "react";
-import Link from "react-router-dom";
-import { Toaster, toast } from "react-hot-toast";
-import { GiConsoleController } from "react-icons/gi";
+// import axios from "axios";
+import React, { useState, useMemo } from "react";
+// import Link from "react-router-dom";
+import { toast } from "react-hot-toast";
+// import { GiConsoleController } from "react-icons/gi";
 
 const LoginContext = React.createContext();
 
@@ -43,7 +43,7 @@ export function LoginProvider(props) {
     var axios = require("axios");
     var config = {
       method: "post",
-      url: `${URLBASE}Login/`,
+      url: `${URLBASE}login/`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -79,6 +79,7 @@ export function LoginProvider(props) {
       setDataToken,
       setauthentication,
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataToken, authentication]);
 
   return <LoginContext.Provider value={value} {...props} />;
