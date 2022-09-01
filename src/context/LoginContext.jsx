@@ -7,8 +7,8 @@ import { toast } from "react-hot-toast";
 const LoginContext = React.createContext();
 
 export function LoginProvider(props) {
-  // const URLBASE = 'http://127.0.0.1:8080/'
-  const URLBASE = "https://msdocs-python-sqlserver-api-215.azurewebsites.net/";
+  const URLBASE = "http://127.0.0.1:8000/";
+  // const URLBASE = "https://msdocs-python-sqlserver-api-215.azurewebsites.net/";
 
   const [dataToken, setDataToken] = useState();
   const [authentication, setauthentication] = useState(false);
@@ -21,7 +21,7 @@ export function LoginProvider(props) {
 
     var config = {
       method: "post",
-      url: `${URLBASE}Logout/`,
+      url: `${URLBASE}logout/`,
       headers: {
         "Content-Type": "application/json",
       },

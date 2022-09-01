@@ -6,8 +6,8 @@ import { useLogin } from "../LoginContext";
 const Omc34Context = React.createContext();
 
 export function Omc34Provider(props) {
-  // const URLBASE = 'http://127.0.0.1:8080/'
-  const URLBASE = "https://msdocs-python-sqlserver-api-215.azurewebsites.net/";
+  const URLBASE = "http://127.0.0.1:8000/";
+  //const URLBASE = "https://msdocs-python-sqlserver-api-215.azurewebsites.net/";
 
   const { dataToken } = useLogin();
 

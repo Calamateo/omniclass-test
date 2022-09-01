@@ -14,6 +14,9 @@ import PageOmc34 from '../pages/PageOmc34'
 import PageOmc41 from '../pages/PageOmc41'
 import { TestDeOmc34 } from '../components/Test/TestDeOmc34'
 import VistaParcial from '../components/Materiales/VistaParcial'
+import { SectoresDeMercado } from '../components/SectoresDeMercado/SectoresDeMercado'
+import Marca from '../components/MarcaMercado/Marca'
+import Acero from '../components/Acero/Acero'
 
 
 function Rutas() {
@@ -35,6 +38,9 @@ function Rutas() {
                 <Route path="/omniclass34" element={<PageOmc34 />} />
                 <Route path="/omniclass41" element={<PageOmc41 />} />
                 <Route path="/formulario" element={<VistaParcial />} />
+                <Route path="/sectorDeMercado" element={<SectoresDeMercado />} />
+                <Route path="/marcas" element={<Marca />} />
+                <Route path="/acero" element={<Acero />} />
             </Routes>
         </BrowserRouter>
     )

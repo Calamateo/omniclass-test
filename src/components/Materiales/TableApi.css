@@ -19,8 +19,23 @@ a:hover {
 }
 
 .trash {
-  color: green;
+  color: red;
   cursor: pointer;
+  font-size: 19px;
 }
 
+.trash:hover {
+  font-size: 21px;
+}
+
+.editar {
+  color:dodgerblue;
+  cursor: pointer;
+  font-size: 19px;
+}
+
+.editar:hover {
+  color: yellowgreen;
+  font-size: 21px;
+}
 
