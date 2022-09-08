@@ -49,6 +49,7 @@ function TableProvider(props) {
   const [datosModal, setDatosModal] = React.useState('')
   const [datoBaseTabla, setDatoBaseTabla] = React.useState([]);
   const [estructura, setEstructura] = React.useState(false);
+  const [cimientos, setCimientos] = React.useState(false);
   const [informationComplete, setInformationComplete] = React.useState(false);
 
 
@@ -530,6 +531,7 @@ function TableProvider(props) {
       listarConcretosMaterialesCopia,
       setListarConcretosMaterialesCopia,
       estructura, setEstructura,
+      cimientos, setCimientos,
       informationComplete,
     }}>
       {props.children}

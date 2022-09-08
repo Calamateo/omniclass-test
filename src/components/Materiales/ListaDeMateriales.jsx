@@ -10,6 +10,8 @@ import { Clasificacion } from "./Clasificacion";
 import { styled } from "@mui/material/styles";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { SwipeableTemporaryDrawer } from "./SwipeableTemporaryDrawer";
+import { Cemento } from "../Cemento/Cemento";
+import Acero from "../Acero/Acero";
 
 function ListaDeMateriales() {
   const {
@@ -28,6 +30,7 @@ function ListaDeMateriales() {
     listarConcretosMaterialesCopia,
     setListarConcretosMaterialesCopia,
     estructura,
+    cimientos,
   } = React.useContext(TableContext);
 
   const datosGenerales = {
@@ -101,6 +104,9 @@ function ListaDeMateriales() {
   // ];
 
   const [busqueda, setBusqueda] = React.useState("");
+  const [seleccionarPropiedad, setSeleccionarPropiedad] = React.useState(null);
+  const [seleccionarCimentaciones, setSeleccionarCimentaciones] =
+    React.useState(null);
   // const [busqueda2, setBusqueda2] = React.useState("");
 
   const hangleChange = (e) => {
@@ -160,70 +166,111 @@ function ListaDeMateriales() {
       backgroundColor: theme.palette.common.black,
     },
   }));
+
   return (
     <div className="container mt-5 pt-4">
       <h2 className="h1 text-center">LISTA DE MATERIALES/PRODUCTOS</h2>
       <br />
       <h2 className="h2 text-center my-2">Selecciona una clasificación</h2>
       <Clasificacion />
-      {estructura && <Estructura />}
-      <br />
-      <br />
-      <div className="row">
-        <div className="col-6 d-flex" role="search">
-          <input
-            className="form-control w-75"
-            type="search"
-            placeholder="Search"
-            width={"80% !important"}
-            aria-label="Search"
-            onChange={hangleChange}
-          />
-          <button className="btn btn-outline-success" type="submit">
-            Search
-          </button>
-        </div>
-        <div className="col-2"></div>
-        <div className="col-4 d-flex align-items-end justify-content-end">
-          <SwipeableTemporaryDrawer />
-          <CSVLink
-            data={listarConcretosMateriales}
-            filename={"listarConcretosMateriales.txt"}
-            className="h3 me-1 text-success"
+      {estructura && (
+        <div className="div">
+          <select
+            onChange={(e) => setSeleccionarPropiedad(e.target.value)}
+            class="form-select form-select-sm mt-5"
+            aria-label=".form-select-sm example"
           >
-            <BootstrapTooltip title="Descargar archivo">
-              <BiExport />
-            </BootstrapTooltip>
-          </CSVLink>
-          <ModalMateriales className="justify-aling-end" />
+            <option selected>Selecciona la opcion</option>
+            <option value="1">Acero</option>
+            <option value="2">Cemento</option>
+          </select>
+
+          <br />
+          <br />
+          {seleccionarPropiedad === "1" && <Acero />}
+          {seleccionarPropiedad === "2" && <Cemento />}
         </div>
-      </div>
-      <div className="table-responsive">
-        <table className="table">
-          <thead>
-            <tr id="table-materials-title">
-              {datoBaseTabla.map((title, index) => (
-                <th className="" key={index}>
-                  {datosGenerales[title]}
-                </th>
-              ))}
-              <th>Editar</th>
-            </tr>
-          </thead>
-          <tbody>
-            {listarConcretosMaterialesCopia.map((material, index) => (
-              <tr key={index} id="table-materials" className="seleccion">
-                {datoBaseTabla.map((item, index) => (
-                  <td key={index}>{material[`${item}`]}</td>
-                ))}
-                <td>
-                  <RiFileEditFill className="trash" onClick={resetTabla} />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      )}
+      {cimientos && (
+        <div className="">
+          <select
+            onChange={(e) => setSeleccionarCimentaciones(e.target.value)}
+            class="form-select form-select-sm mt-5"
+            aria-label=".form-select-sm example"
+          >
+            <option selected>Selecciona la opcion</option>
+            <option value="1">Concreto premezclado</option>
+            <option value="2">Concreto</option>
+          </select>
+
+          {seleccionarCimentaciones === "1" && (
+            <div className="concretoPremesclado mt-5">
+              <div className="row">
+                <div className="col-6 d-flex" role="search">
+                  <input
+                    className="form-control w-75"
+                    type="search"
+                    placeholder="Search"
+                    width={"80% !important"}
+                    aria-label="Search"
+                    onChange={hangleChange}
+                  />
+                  <button className="btn btn-outline-success" type="submit">
+                    Search
+                  </button>
+                </div>
+                <div className="col-2"></div>
+                <div className="col-4 d-flex align-items-end justify-content-end">
+                  <SwipeableTemporaryDrawer />
+                  <CSVLink
+                    data={listarConcretosMateriales}
+                    filename={"listarConcretosMateriales.txt"}
+                    className="h3 me-1 text-success"
+                  >
+                    <BootstrapTooltip title="Descargar archivo">
+                      <BiExport />
+                    </BootstrapTooltip>
+                  </CSVLink>
+                  <ModalMateriales className="justify-aling-end" />
+                </div>
+              </div>
+              <div className="table-responsive">
+                <table className="table">
+                  <thead>
+                    <tr id="table-materials-title">
+                      {datoBaseTabla.map((title, index) => (
+                        <th className="" key={index}>
+                          {datosGenerales[title]}
+                        </th>
+                      ))}
+                      <th>Editar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {listarConcretosMaterialesCopia.map((material, index) => (
+                      <tr
+                        key={index}
+                        id="table-materials"
+                        className="seleccion"
+                      >
+                        {datoBaseTabla.map((item, index) => (
+                          <td key={index}>{material[`${item}`]}</td>
+                        ))}
+                        <td>
+                          <RiFileEditFill
+                            className="trash"
+                            onClick={resetTabla}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

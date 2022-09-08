@@ -5,8 +5,8 @@ import { RiFileEditFill } from "react-icons/ri";
 import { FcFullTrash } from "react-icons/fc";
 import { ImCross } from "react-icons/im";
 import { FiAlertCircle } from "react-icons/fi";
-import { TbArrowsDown, TbArrowsUp, TbArrowsDownUp } from "react-icons/tb";
 import { CSVLink } from "react-csv";
+import { TbArrowsDown, TbArrowsUp, TbArrowsDownUp } from "react-icons/tb";
 import Pagination from "@mui/material/Pagination";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -23,7 +23,7 @@ import { BiExport } from "react-icons/bi";
 import { styled } from "@mui/material/styles";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
-function Acero() {
+function Cemento() {
   //Token necesary for authentication login
   const { dataToken } = useLogin();
 
@@ -67,7 +67,7 @@ function Acero() {
 
   //funcion para mandar a llamar las apis
   const fetchApis = async () => {
-    const { data } = await api("apimateriales/ListarAcerosRefuerzo/");
+    const { data } = await api("apimateriales/ListarCementos/");
     await paginationBottom(data.count, rowsPagination);
     setAcero(data);
     setAceroCopia(data);
@@ -233,9 +233,9 @@ function Acero() {
   }));
 
   return (
-    <div className="pt-5 mt-2" id="homeaceros">
+    <div className="pt-5 mt-2 container" id="homeaceros">
       <br />
-      <h3 className="h1 text-center">Indice de aceros</h3>
+      <h3 className="h1 text-center">PROPIEDADES DEL CEMENTO</h3>
       <br />
       <div className="mb-3 d-flex align-items-center">
         {/* <span className="input-group-text" id="inputGroup-sizing-sm">
@@ -262,7 +262,7 @@ function Acero() {
           <div className="">
             <CSVLink
               data={acero}
-              filename={"listarAcero.csv"}
+              filename={"listarCemento.csv"}
               className="h3 me-1 text-success"
             >
               <BootstrapTooltip title="Descargar archivo">
@@ -293,83 +293,85 @@ function Acero() {
         </Alert>
       )}
       {acero ? (
-        <table className="table">
-          <thead>
-            <tr>
-              <th
-                // onClick={() => ordenarAlfabeticamente()}
-                style={{ cursor: "pointer" }}
-              >
-                Codigo {sortAlphabetic === "down" && <TbArrowsDown />}
-                {sortAlphabetic === "up" && <TbArrowsUp />}
-                {sortAlphabetic === "" && <TbArrowsDownUp />}
-              </th>
-              <th
-                className=""
-                // onClick={() => ordenarActivoMercado()}
-                style={{ cursor: "pointer" }}
-              >
-                Descripcion {sortActivo === "down" && <TbArrowsDown />}
-                {sortActivo === "up" && <TbArrowsUp />}
-                {sortActivo === "" && <TbArrowsDownUp />}
-              </th>
-              <th>Grado</th>
-              <th>No. de barilla</th>
-              <th>Diametro</th>
-              <th>Area</th>
-              <th>Perimetro</th>
-              <th>Masa</th>
-              <th>Tipo de esfuerzo</th>
-              <th>Fecha de registro</th>
-              <th className="text-center">Editar</th>
-              <th className="text-center">Eliminar</th>
-            </tr>
-          </thead>
-          <tbody>
-            {aceroCopia
-              .slice(
-                containerPagination * rowsPagination,
-                containerPagination * rowsPagination + rowsPagination
-              )
-              .map((item, index) => (
-                <tr key={index}>
-                  <td className="col">{item.CodigoOmc23}</td>
-                  <td className="col-4">{item.descriCorta}</td>
-                  <td className="col">{item.valorGrad}</td>
-                  <td className="col">{item.noVarilla}</td>
-                  <td className="col">{item.diametro}</td>
-                  <td className="col">{item.area}</td>
-                  <td className="col">{item.perimetro}</td>
-                  <td className="col">{item.masa}</td>
-                  <td className="col">{item.tipoEsfuerzo}</td>
-                  <td className="col">{item.fecRegInf}</td>
-                  <td className="col">
-                    <a href="#editaraceros">
-                      <RiFileEditFill
-                        className="editar"
+        <div className="table-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th
+                  // onClick={() => ordenarAlfabeticamente()}
+                  style={{ cursor: "pointer" }}
+                >
+                  Codigo {sortAlphabetic === "down" && <TbArrowsDown />}
+                  {sortAlphabetic === "up" && <TbArrowsUp />}
+                  {sortAlphabetic === "" && <TbArrowsDownUp />}
+                </th>
+                <th
+                  className=""
+                  // onClick={() => ordenarActivoMercado()}
+                  style={{ cursor: "pointer" }}
+                >
+                  Descripcion {sortActivo === "down" && <TbArrowsDown />}
+                  {sortActivo === "up" && <TbArrowsUp />}
+                  {sortActivo === "" && <TbArrowsDownUp />}
+                </th>
+                <th>Grado</th>
+                <th>No. de barilla</th>
+                <th>Diametro</th>
+                <th>Area</th>
+                <th>Perimetro</th>
+                <th>Masa</th>
+                <th>Tipo de esfuerzo</th>
+                <th>Fecha de registro</th>
+                <th className="text-center">Editar</th>
+                <th className="text-center">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {aceroCopia
+                .slice(
+                  containerPagination * rowsPagination,
+                  containerPagination * rowsPagination + rowsPagination
+                )
+                .map((item, index) => (
+                  <tr key={index}>
+                    <td className="col">{item.CodigoOmc23}</td>
+                    <td className="col-3">{item.descriCorta}</td>
+                    <td className="col-3">{item.descriLarga}</td>
+                    <td className="col-5">{item.tipo}</td>
+                    <td className="col">{item.clase}</td>
+                    <td className="col">{item.Comentarios}</td>
+                    <td className="col">{item.palabrasCve}</td>
+                    <td className="col">{item.fuenteInf}</td>
+                    <td className="col">{item.Omniclass}</td>
+                    <td className="col">{item.fecRegInf}</td>
+                    <td className="col">
+                      <a href="#editaraceros">
+                        <RiFileEditFill
+                          className="editar"
+                          onClick={() => {
+                            netEditarNombre(item.nombre);
+                            setIdName(item.idacero);
+                            setAceroActiva(item.activo);
+                            setEditAvailable(true);
+                          }}
+                        />
+                      </a>
+                    </td>
+                    <td className="col-1 text-center">
+                      <FcFullTrash
+                        className="trash"
                         onClick={() => {
-                          netEditarNombre(item.nombre);
                           setIdName(item.idacero);
-                          setAceroActiva(item.activo);
-                          setEditAvailable(true);
+                          // nliminarNombre(item.idacero);
+                          setOpen(true);
                         }}
                       />
-                    </a>
-                  </td>
-                  <td className="col-1 text-center">
-                    <FcFullTrash
-                      className="trash"
-                      onClick={() => {
-                        setIdName(item.idacero);
-                        // nliminarNombre(item.idacero);
-                        setOpen(true);
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         <h2>Cargando ...</h2>
       )}
@@ -412,67 +414,6 @@ function Acero() {
         </FormControl>
       </div>
       <br />
-      {/* <section id="editaracerosFormulario">
-        <h2>
-          {editAvailable
-            ? "Editar nombre de la acero"
-            : "Crear nombre de la acero"}
-        </h2>
-
-        {tipoDeAlerta === "error" && (
-          <Alert severity={tipoDeAlerta} className="mt-3">
-            {contenidoDeAlerta}
-          </Alert>
-        )}
-        <div className="d-flex align-items-end">
-          <input
-            type="text"
-            id="editaraceros"
-            className="form-control w-25 mt-4"
-            aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-sm"
-            placeholder=""
-            onChange={(e) => netEditarNombre(e.target.value)}
-            value={nditarNombre}
-          />
-          <Button
-            color="success"
-            className="ms-3"
-            variant="outlined"
-            onClick={
-              editAvailable
-                ? () => guardarEdicionDeNombre()
-                : () => crearNombreValidacion()
-            }
-            size="large"
-            disabled={nditarNombre === ""}
-          >
-            {editAvailable ? "Actualizar" : "Crear"}
-          </Button>
-          {editAvailable && (
-            <Button
-              color="error"
-              className="ms-2"
-              variant="outlined"
-              onClick={() => {
-                setEditAvailable(false);
-                setAceroActiva(false);
-                netEditarNombre("");
-              }}
-              size="large"
-              href="#homeaceros"
-            >
-              Cancelar
-            </Button>
-          )}
-        </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-      </section> */}
 
       <div id="modalParaEliminar">
         <Dialog
@@ -531,4 +472,4 @@ function Acero() {
   );
 }
 
-export default Acero;
+export { Cemento };

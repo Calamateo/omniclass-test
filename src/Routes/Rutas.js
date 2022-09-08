@@ -17,6 +17,7 @@ import VistaParcial from '../components/Materiales/VistaParcial'
 import { SectoresDeMercado } from '../components/SectoresDeMercado/SectoresDeMercado'
 import Marca from '../components/MarcaMercado/Marca'
 import Acero from '../components/Acero/Acero'
+import { Cemento } from '../components/Cemento/Cemento'
 
 
 function Rutas() {
@@ -41,6 +42,7 @@ function Rutas() {
                 <Route path="/sectorDeMercado" element={<SectoresDeMercado />} />
                 <Route path="/marcas" element={<Marca />} />
                 <Route path="/acero" element={<Acero />} />
+                <Route path="/cemento" element={<Cemento />} />
             </Routes>
         </BrowserRouter>
     )

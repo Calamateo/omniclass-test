@@ -7,9 +7,11 @@ function Clasificacion() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setEstructura(false);
+    setCimientos(false);
   };
 
-  const { estructura, setEstructura } = React.useContext(TableContext);
+  const { estructura, setEstructura, cimientos, setCimientos } =
+    React.useContext(TableContext);
 
   return (
     <Box sx={{ bgcolor: "", color: "" }}>
@@ -21,7 +23,11 @@ function Clasificacion() {
         aria-label="scrollable auto tabs example"
       >
         <Tab className="fw-bold" label="Acondicionamiento del terreno" />
-        <Tab className="fw-bold" label="Cimientos" />
+        <Tab
+          className="fw-bold"
+          label="Cimientos"
+          onClick={() => setCimientos(!cimientos)}
+        />
         <Tab
           className="fw-bold"
           label="Estructuras"
