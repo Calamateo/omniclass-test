@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useOmcCon34 } from "../../context/omc34/ContextOmcCon34";
 
@@ -30,8 +30,6 @@ const FormOmc34 = (props) => {
     setValue("id", id);
     setValue("Consecutivo", Consecutivo);
   }
-
-  // console.log(props.dataRolesOrg.pop())
 
   // setValue('Codigo',consecutivo)
   // setValue('id',props.dataRolesOrg.pop())
@@ -211,7 +209,6 @@ const FormOmc34 = (props) => {
             )}
           </div>
         </div>
-
         <div className="d-flex mb-3 align-items-end flex-column">
           <div>
             <button type="submit" className="btn m-2  btn-primary mt-3">

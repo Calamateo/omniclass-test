@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Login from "./pages/Login";
 //redux
 import { Omc23Provider } from "./context/omc23/ContextOmc23";
@@ -10,8 +10,8 @@ import './styles/buttons.css'
 import './styles/styles.css'
 import { Rutas } from "./Routes/Rutas";
 import { TableProvider } from "./context/Materiales/TableContext";
-import { Container } from "./components/Materiales/Container";
-import { LoginProvider } from "./context/LoginContext";
+// import { Container } from "./components/Materiales/Container";
+// import { LoginProvider } from "./context/LoginContext";
 import { useLogin } from "./context/LoginContext";
 import { Omc34ConProvider } from "./context/omc34/ContextOmcCon34";
 import { Omc41Provider } from "./context/omc41/ContextOmc41";
@@ -21,7 +21,7 @@ import { Omc34Provider } from "./context/omc34/ContextOmc34";
 
 function App() {
 
-  const { dataToken, authentication, setDataToken, setauthentication } = useLogin()
+  const { authentication, setDataToken, setauthentication } = useLogin()
 
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function App() {
       setDataToken(user)
       setauthentication(true)
     }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (authentication === false) {

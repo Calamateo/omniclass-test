@@ -49,12 +49,13 @@ function TableProvider(props) {
   const [datosModal, setDatosModal] = React.useState('')
   const [datoBaseTabla, setDatoBaseTabla] = React.useState([]);
   const [estructura, setEstructura] = React.useState(false);
+  const [informationComplete, setInformationComplete] = React.useState(false);
 
 
   //UseEffect initializes the Api
   React.useEffect(() => {
     fetchData();
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //URL base for API requests
@@ -66,7 +67,7 @@ function TableProvider(props) {
     }
   })
 
-  const URL = 'http://127.0.0.1:8000/';
+  // const URL = 'http://127.0.0.1:8000/';
 
 
 
@@ -125,6 +126,40 @@ function TableProvider(props) {
 
   const fetchMateriales = async () => {
 
+    const { data: listarConcretosMaterial } = await api(`apimateriales/ListarConcretosMateriales/`);
+    await setListarConcretosMateriales(listarConcretosMaterial);
+    await setListarConcretosMaterialesCopia(listarConcretosMaterial);
+
+    setDatosConcreto([
+      "numMat",
+      "descriLarga",
+      "Comentarios",
+      "palabrasCve",
+      "desCorEng",
+      "desLargEng",
+      "fuenteInf",
+      "fecRegInf",
+      "codigoBimsa",
+      "Nombre",
+      "tipoEsfuerzo",
+      "tmaFrac",
+      "TipoCons",
+      "modElast",
+      "Acronimo",
+      "Edad",
+      "absorcionCap",
+      "Acronimo2",
+      "trabaExtend",
+      "Clase",
+      "Color",
+      "Comportamiento",
+      "conAire",
+      "conIonClor",
+      "tiempoPrueba",
+      "tipoSistema",
+    ])
+    setDatoBaseTabla(datosBaseParaLaTabla);
+
     const { data: materials } = await api(`apimateriales/Material/`)
     const numero = materials.count + 1;
     await setMaterial(String(numero).padStart(5, 0));
@@ -167,45 +202,6 @@ function TableProvider(props) {
 
     const { data: listarFibraConcre } = await api(`apimateriales/ListarFibraConcre/`)
     await setListarFibraConcre(listarFibraConcre.results);
-
-    const { data: listarConcretosMaterial } = await api(`apimateriales/ListarConcretosMateriales/`);
-    await setListarConcretosMateriales(listarConcretosMaterial);
-    await setListarConcretosMaterialesCopia(listarConcretosMaterial);
-
-    // await setDatosConcreto(Object.keys(listarConcretosMaterialesData[0]));
-
-    setDatosConcreto([
-      "numMat",
-      "descriLarga",
-      "Comentarios",
-      "palabrasCve",
-      "desCorEng",
-      "desLargEng",
-      "fuenteInf",
-      "fecRegInf",
-      "codigoBimsa",
-      "Nombre",
-      "tipoEsfuerzo",
-      "tmaFrac",
-      "TipoCons",
-      "modElast",
-      "Acronimo",
-      "Edad",
-      "absorcionCap",
-      "Acronimo2",
-      "trabaExtend",
-      "Clase",
-      "Color",
-      "Comportamiento",
-      "conAire",
-      "conIonClor",
-      "tiempoPrueba",
-      "tipoSistema",
-    ]
-    )
-
-
-    setDatoBaseTabla(datosBaseParaLaTabla);
   }
 
   const apis = async () => {
@@ -246,8 +242,8 @@ function TableProvider(props) {
     const { data: data6 } = await api(`${URLDatosOmniClass}Nivel6/`)
     // const users6 = await data6.json();
     await setNivel6(data6.results);
-    await console.log(data6.results)
     await console.log('Todas las apis de omniclass 23 y 41 listas')
+    await setInformationComplete(true)
   }
 
 
@@ -402,6 +398,7 @@ function TableProvider(props) {
     volver(0)
     setTablesBool(!tableBool)
     await setOmniClass(41)
+    setInformationComplete(false)
     apis()
     setTimeout(() => {
       setOmniClass(23)
@@ -421,6 +418,7 @@ function TableProvider(props) {
     volver(0)
     setTablesBool(!tableBool)
     setOmniClass(23);
+    setInformationComplete(false)
     apis();
     setLoading(true);
     setTimeout(() => {
@@ -532,6 +530,7 @@ function TableProvider(props) {
       listarConcretosMaterialesCopia,
       setListarConcretosMaterialesCopia,
       estructura, setEstructura,
+      informationComplete,
     }}>
       {props.children}
     </TableContext.Provider>

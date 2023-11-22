@@ -10,6 +10,12 @@ function SwipeableTemporaryDrawer() {
     listarTipoResistencia,
     listarConcretosMateriales,
     setListarConcretosMaterialesCopia,
+    listarDensidad,
+    listarFlujoRev,
+    listarRevenimiento,
+    listarFibraConcre,
+    listarClasExposicion,
+    listarSistColocacion,
   } = React.useContext(TableContext);
 
   const [busqueda2, setBusqueda2] = React.useState("");
@@ -17,10 +23,11 @@ function SwipeableTemporaryDrawer() {
   const hangleChange2 = (e) => {
     setBusqueda2(e.target.value);
     filtradoEspecial(e.target.value);
-    console.log(e.target.value);
+    console.log(busqueda2);
   };
 
   const filtradoEspecial = (terminoDeBusqueda) => {
+    // eslint-disable-next-line array-callback-return
     var resultadoBusqueda2 = listarConcretosMateriales.filter((elemento) => {
       if (
         elemento.valRev
@@ -37,7 +44,7 @@ function SwipeableTemporaryDrawer() {
   return (
     <div>
       <AiFillSetting
-        class="h3"
+        className="h3"
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasRight"
@@ -47,22 +54,22 @@ function SwipeableTemporaryDrawer() {
       </AiFillSetting>
 
       <div
-        class="offcanvas offcanvas-end"
+        className="offcanvas offcanvas-end"
         tabindex="-1"
         id="offcanvasRight"
         aria-labelledby="offcanvasRightLabel"
       >
-        <div class="offcanvas-header">
-          <h5 id="offcanvasRightLabel">Offcanvas right</h5>
+        <div className="offcanvas-header">
+          <h5 id="offcanvasRightLabel">Filtrar materiales</h5>
           <button
             type="button"
-            class="btn-close text-reset"
+            className="btn-close text-reset"
             data-bs-dismiss="offcanvas"
             aria-label="Close"
           ></button>
         </div>
-        {/* Aqui va la info de informacion dentro del offcanvas */}
-        <div class="offcanvas-body">
+
+        <div className="offcanvas-body">
           <ul className="" aria-labelledby="dropdownMenuLink">
             <li>
               <Link className="dropdown-item" to>
@@ -125,6 +132,108 @@ function SwipeableTemporaryDrawer() {
                   ))}
                 </select>
               </Link>
+            </li>
+            <li>
+              <Link className="dropdown-item" to>
+                <select name="" id="" className="form-select">
+                  <option value="">Densidad</option>
+                  <option value="">Selecciona...</option>
+                  {listarDensidad.map((value, index) => (
+                    <option key={index} value={value.idDensidad}>
+                      {value.valDensidad}
+                    </option>
+                  ))}
+                </select>
+              </Link>
+            </li>
+            <li>
+              <Link className="dropdown-item" to>
+                <select name="" id="" className="form-select">
+                  <option value="">Tipo de Densidad</option>
+                </select>
+              </Link>
+            </li>
+            <li>
+              <Link className="dropdown-item" to>
+                <select name="" id="" className="form-select">
+                  <option value="">Tipo de consistencia</option>
+                </select>
+              </Link>
+            </li>
+            <li>
+              <Link className="dropdown-item" to>
+                <select name="" id="" className="form-select">
+                  <option value="">Flujo de revenimiento</option>
+                  {listarFlujoRev.map((value, index) => (
+                    <option key={index} value={value.idFlujoRev}>
+                      {value.valFluRev}
+                    </option>
+                  ))}
+                </select>
+              </Link>
+            </li>
+            <li>
+              <Link className="dropdown-item" to>
+                <select
+                  name=""
+                  id=""
+                  onChange={hangleChange2}
+                  className="form-select"
+                >
+                  <option value="">Valor de revenimiento</option>
+                  {listarRevenimiento.map((value, index) => (
+                    <option key={index} value={value.valRev}>
+                      {value.valRev}
+                    </option>
+                  ))}
+                </select>
+              </Link>
+            </li>
+            <li>
+              <Link className="dropdown-item" to>
+                <select name="" id="" className="form-select">
+                  <option value="">Fibra</option>
+                  {listarFibraConcre.map((value, index) => (
+                    <option key={index} value={value.idFibraCon}>
+                      {value.Fibras}
+                    </option>
+                  ))}
+                </select>
+              </Link>
+            </li>
+            <li>
+              <Link className="dropdown-item" to>
+                <select name="" id="" className="form-select">
+                  <option value="">Relación agua cemento</option>
+                </select>
+              </Link>
+            </li>
+            <li>
+              <Link className="dropdown-item" to>
+                <select name="" id="" className="form-select">
+                  <option value="">Categoria de exposición</option>
+                  {listarClasExposicion.map((value, index) => (
+                    <option key={index} value={value.idClasExpo}>
+                      {value.Condicion}
+                    </option>
+                  ))}
+                </select>
+              </Link>
+            </li>
+            <li>
+              <Link className="dropdown-item" to>
+                <select name="" id="" className="form-select">
+                  <option value="">Sistema de colocación</option>
+                  {listarSistColocacion.map((value, index) => (
+                    <option key={index} value={value.idSistColoc}>
+                      {value.tipoSistema}
+                    </option>
+                  ))}
+                </select>
+              </Link>
+            </li>
+            <li>
+              <Link className="dropdown-item" to></Link>
             </li>
           </ul>
         </div>

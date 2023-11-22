@@ -10,12 +10,12 @@ import { useOmcCon34 } from "../context/omc34/ContextOmcCon34";
 
 function PageConsultaOrg() {
   // DATOS DE LOS DISTITOS NIVELES DE Omc34
-  const { omc34n1, omc34n2, omc34n3, omc34n4, RolesOrg } = useOmcCon34();
+  const { omc34n1 } = useOmcCon34();
   //
-  const [nivel2, setNivel2] = useState(false);
-  const [nivel3, setNivel3] = useState(false);
-  const [nivel4, setNivel4] = useState(false);
-  const [nivel5, setNivel5] = useState(false);
+  const [nivel2] = useState(false);
+  const [nivel3] = useState(false);
+  const [nivel4] = useState(false);
+  const [nivel5] = useState(false);
 
   const Colapsar = (e) => {
     const colaps = e.currentTarget.nextSibling;

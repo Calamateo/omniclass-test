@@ -21,12 +21,12 @@ function Clasificacion() {
         aria-label="scrollable auto tabs example"
       >
         <Tab className="fw-bold" label="Acondicionamiento del terreno" />
+        <Tab className="fw-bold" label="Cimientos" />
         <Tab
           className="fw-bold"
-          label="Cimientos"
+          label="Estructuras"
           onClick={() => setEstructura(!estructura)}
         />
-        <Tab className="fw-bold" label="Estructuras" />
         <Tab className="fw-bold" label="Fachadas y muros divisorios" />
         <Tab className="fw-bold" label="Remates y ayudas" />
         <Tab className="fw-bold" label="Firmes y pavimentos urbanos" />

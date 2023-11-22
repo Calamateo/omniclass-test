@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 import { useOmcCon34 } from "../context/omc34/ContextOmcCon34";
-import { Toaster, toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import TablaOmc34N from "../components/omc34RolesO/TablaOmc34N";
 import FormOmc34 from "../components/omc34RolesO/FormOmc34";
 import Footer from "../components/footer";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { BsArrowBarRight } from "react-icons/bs";
 import "../styles/omc34/styles.css";
 
@@ -48,7 +48,7 @@ function RolesOrg() {
         </NavLink>
         <div className="containerTitle">
           <p className="textTitle">
-            Complementar Norma Omniclass 34:{" "}
+            Complementar Norma Omniclass 34:
             <p style={{ fontZise: "" }}>
               Formulario de Registro de Nuevos Roles Organizacionales
             </p>
@@ -65,7 +65,10 @@ function RolesOrg() {
           <div className="ContainertabsOmc34RolOrg" style={{ height: "100px" }}>
             {descripcion.map((desc, index) => (
               <div
-                onClick={() => (previusLevel(desc.nivel), setformhiden(false))}
+                onClick={() => {
+                  previusLevel(desc.nivel);
+                  setformhiden(false);
+                }}
                 title={desc.descripcion}
                 key={index}
                 className="tabsOmc34RolOrg"
@@ -75,7 +78,6 @@ function RolesOrg() {
             ))}
           </div>
         ) : null}
-
         {formhiden ? (
           <FormOmc34
             RegistrarRolOrg={RegistrarRolOrg}

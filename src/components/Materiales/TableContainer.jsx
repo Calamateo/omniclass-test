@@ -8,7 +8,8 @@ function TableContainer() {
   const { tableBool } = React.useContext(TableContext);
 
   return (
-    <div className="mt-5 pt-3" id="omniclass">
+    <div className="container mt-5 pt-3" id="omniclass">
+      <br />
       <ButtonClass />
       {tableBool ? <TableApi41 /> : <TableApi />}
     </div>

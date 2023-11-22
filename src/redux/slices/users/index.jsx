@@ -112,15 +112,3 @@ export const fetchAllOMCN6 = () => (dispatch) => {
 };
 
 export default userSlice.reducer;
-
-// export const omc2Slice = createSlice({
-//     name:'omcn2',
-//     initialState:{
-//         listomc2:[]
-//     },
-//     reducers:{
-//         setOMCN2List: (state,action)=>{
-//             state.listomc2 = action.payload;
-//        }
-//     }
-// });

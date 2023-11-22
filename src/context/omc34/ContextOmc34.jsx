@@ -1,7 +1,6 @@
-import { render, renderHook } from "@testing-library/react";
 import axios from "axios";
 import React, { useEffect, useState, useMemo } from "react";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { useLogin } from "../LoginContext";
 // import { fetchAllUsers,fetchAllOMCN2,fetchAllOMCN3,fetchAllOMCN4,fetchAllOMCN5,fetchAllOMCN6} from '../../redux/slices'
 const Omc34Context = React.createContext();
@@ -14,6 +13,7 @@ export function Omc34Provider(props) {
 
   useEffect(() => {
     fetchData(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const headers = {
@@ -380,6 +380,7 @@ export function Omc34Provider(props) {
       selectOpp2,
       selectOpp3,
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     omc34n1,
     omc34n2,

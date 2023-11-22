@@ -3,7 +3,11 @@ import { ButtonClass } from "./ButtonClass";
 
 function Loading() {
   return (
-    <div className="container text-center vh-100" style={{ cursor: "wait" }}>
+    <div
+      className="container mt-5 pt-3 text-center vh-100"
+      style={{ cursor: "wait" }}
+    >
+      <br />
       <ButtonClass />
       <table className="table" id="tableMaterials">
         <thead>

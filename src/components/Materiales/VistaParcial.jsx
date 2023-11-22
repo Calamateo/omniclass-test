@@ -1,7 +1,9 @@
 import React from "react";
 import { TableContext } from "../../context/Materiales/TableContext";
-import { Modal } from "./Modal";
+// import { Modal } from "./Modal";
 import { useLogin } from "../../context/LoginContext";
+import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 function VistaParcial() {
   const { dataToken } = useLogin();
@@ -11,7 +13,6 @@ function VistaParcial() {
     material,
     concreto,
     numMaterial,
-    listarEsfuerzo,
     listarValorEsfuerzo,
     listarUnidadesMedida,
     listarTipoResistencia,
@@ -25,8 +26,6 @@ function VistaParcial() {
     listarIonCloruro,
     setFormularioActivate,
     listarFibraConcre,
-    setDatosModal,
-    api,
   } = React.useContext(TableContext);
 
   const [esfuerzo, setEsfuerzo] = React.useState("");
@@ -278,12 +277,17 @@ function VistaParcial() {
 
   const [datoTipoDeResitencia, setDatoTipoDeResitencia] = React.useState(null);
   console.log(datoTipoDeResitencia);
-  return (
-    <div className="container bg-light border">
-      <br />
-      <hr />
-      <br />
 
+  return (
+    <div className="container bg-light border mt-5 pt-3">
+      <br />
+      <h2>Registro de concreto premezclado</h2>
+      {/* <hr /> */}
+      <Link to="/omniclass">
+        <Button color="secondary">Regresar</Button>
+      </Link>
+      <br />
+      <br />
       <div className="row gy-2 border pt-1 pb-3">
         <label className="col-md-2 control-label">
           Código:
@@ -323,17 +327,16 @@ function VistaParcial() {
           />
         </label>
       </div>
-
       <div className="row gy-2 justify-content-between my-2">
         {/* <!--ValorEsfuerzo--> */}
-        <label className="col-md-2 control-label">
+        <label className="col-md-4 control-label">
           fc:
           <select
             onChange={(e) => {
               setValorEsfuerzo(e.target.value);
               setDatoTipoDeResitencia(
                 listarValorEsfuerzo.filter(
-                  (val) => val.idValEsf == e.target.value
+                  (val) => val.idValEsf === e.target.value.toString()
                 )[0].fk_TipoResist
               );
             }}
@@ -350,7 +353,7 @@ function VistaParcial() {
           </select>
         </label>
         {/* <!--UnidadesMedida para ValorEsfuerzo--> */}
-        <label className="col-md-2 control-label">
+        <label className="col-md-4 control-label">
           Unidad Esfuerzo:
           <select
             onChange={(e) => setUValorEsfuerzo(e.target.value)}
@@ -377,7 +380,7 @@ function VistaParcial() {
           </select>
         </label>
         {/* <!--TipoResistencia para ValorEsfuerzo--> */}
-        <label className="col-md-2 control-label">
+        <label className="col-md-4 control-label visually-hidden">
           Tipo Resistencia:
           <select
             disabled
@@ -401,7 +404,7 @@ function VistaParcial() {
           </select>
         </label>
         {/* <!--Esfuerzo--> */}
-        <label className="col-md-2 control-label">
+        <label className="col-md-2 control-label visually-hidden">
           Esfuerzo:
           <select
             onChange={(e) => setEsfuerzo(e.target.value)}
@@ -417,7 +420,7 @@ function VistaParcial() {
           </select>
         </label>
         {/* <!--AplPrincipales--> */}
-        <label className="col-md-2 control-label">
+        <label className="col-md-4 control-label">
           Usos y/o Aplicaciones:
           <select
             onChange={(e) => setAplPrincipales(e.target.value)}
@@ -433,7 +436,6 @@ function VistaParcial() {
           </select>
         </label>
       </div>
-
       <div className="row gy-2 justify-content-between">
         {/* <!--TMA--> */}
         <label className="col-sm-3 control-label">
@@ -522,7 +524,6 @@ function VistaParcial() {
           </select>
         </label>
       </div>
-
       {/* <!--Densidad--> */}
       <hr />
       <div className="row gy-2 justify-content-around">
@@ -622,7 +623,6 @@ function VistaParcial() {
           </select>
         </label>
       </div>
-
       <div className="card-header">
         <strong>Caracteristicas Especificas</strong>
       </div>
@@ -630,7 +630,7 @@ function VistaParcial() {
         <form className="row gy-2 justify-content-start align-items-end form">
           <div className="col-3">
             <label className="form-label" htmlFor="Abreviado">
-              Acrónimo del modulo de elasticidad:
+              EC
             </label>
             <input
               className="form-control form-control-sm"
@@ -885,17 +885,21 @@ function VistaParcial() {
             ></textarea>
           </div>
         </div>
-        <button
+        <Link
           type="submit"
           className="btn btn-success mt-5"
           onClick={() => crearDatosDeMateriales()}
+          to="/omniclass"
         >
           Registrar
-        </button>
-        <Modal />
+        </Link>
+        {/* <Modal /> */}
       </div>
+      <br />
+      <br />
+      <br />
     </div>
   );
 }
 
-export { VistaParcial };
+export default VistaParcial;
